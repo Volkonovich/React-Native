@@ -9,10 +9,13 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { deleteTodo } from "../App";
 
-const list = ({ notes }) => {
-  console.log("notes---LIST->>>", notes);
+const list = ({ notes, deleteTodo, value }) => {
+  // const alertSearchQW = ({ item }) => {
+  //   console.log("item", item);
+  //   // Keyboard.dismiss();
+
+  // };
 
   return (
     <View style={styles.wrapperList}>
@@ -27,7 +30,20 @@ const list = ({ notes }) => {
               ></Text>
               <Text style={{ ...styles.textList }}>{item.value}</Text>
               <TouchableOpacity
-                onPress={() => deleteTodo()}
+                onPress={() =>
+                  Alert.alert(
+                    "Are you sure?",
+                    item.value,
+                    [
+                      {
+                        text: "Not",
+                        style: "cancel",
+                      },
+                      { text: "Yes!", onPress: () => deleteTodo(item.id) },
+                    ],
+                    { cancelable: false }
+                  )
+                }
                 activeOpacity={0.5}
                 style={styles.BtnDell}
               >

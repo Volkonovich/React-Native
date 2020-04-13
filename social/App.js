@@ -29,6 +29,37 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 const ProfileScreen = ({ navigation, route }) => {
+  console.log("navigation", navigation);
+  navigation.setOptions({
+    title: `  Hello${route.params.nickName}`,
+    // headerStyle: {
+    //   backgroundColor: "green",
+    // },
+    // headerShown: false,
+    headerRight: () => (
+      <Ionicons
+        name="ios-battery-dead"
+        size={32}
+        color="green"
+        onPress={() => Alert.alert("basket")}
+      />
+    ),
+  });
+
+  // onst BlogScreen = ({ navigation }) => {
+
+  //   return (
+  //     <View style={styles.container}>
+  //       <TextInput placeholder=".....dsdvfsdv" onChangeText={setTextValue} />
+  //       <Text>Home___Worc</Text>
+  //       <Button
+  //         title="Go to profile"
+  //         onPress={() => navigation.navigate("Profile", { nickName: textValue })}
+  //       />
+  //     </View>
+  //   );
+  // };
+
   return (
     <View style={styles.container}>
       <Text>{route.params.nickName}</Text>

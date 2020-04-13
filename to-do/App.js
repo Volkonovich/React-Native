@@ -24,30 +24,33 @@ export default function App() {
   const [value, setValue] = useState("");
 
   const addTask = (color) => {
-    setState({
-      ...state,
-      notes: [...state.notes, { value, color, id: shortId() }],
-    });
-    setValue("");
+    if (value.length) {
+      setState({
+        ...state,
+        notes: [{ value, color, id: shortId() }, ...state.notes],
+      });
+      setValue("");
+    }
   };
 
   const alertSearch = () => {
     Keyboard.dismiss();
-    Alert.alert(
-      "Search",
-      value,
-      [
-        {
-          text: "Low",
-          onPress: () => addTask((state.color = "#116979")),
-          style: "cancel",
-        },
-        { text: "Hight", onPress: () => addTask((state.color = "#2b580c")) },
-      ],
-      { cancelable: false }
-    );
+    if (value.length) {
+      Alert.alert(
+        "Priority",
+        value,
+        [
+          {
+            text: "Low",
+            onPress: () => addTask((state.color = "#116979")),
+            style: "cancel",
+          },
+          { text: "Hight", onPress: () => addTask((state.color = "#2b580c")) },
+        ],
+        { cancelable: false }
+      );
+    }
   };
-  console.log("id--->", id);
 
   const deleteTodo = (id) => {
     setState((prev) => {
@@ -60,6 +63,10 @@ export default function App() {
   console.log("state.notes", state.notes);
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.Title}>My todo list</Text>
+      </View>
+
       <View style={styles.hed}>
         <TextInput style={styles.input} onChangeText={setValue} value={value} />
         <TouchableOpacity
@@ -71,7 +78,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <List notes={state.notes} />
+      <List notes={state.notes} deleteTodo={deleteTodo} />
     </View>
   );
 }
@@ -82,7 +89,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
-
+  Title: {
+    marginTop: 80,
+    width: "100%",
+    color: "#698474",
+    fontSize: 40,
+    fontWeight: "700",
+  },
   hed: {
     marginTop: 80,
     width: "100%",
