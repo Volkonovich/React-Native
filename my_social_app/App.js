@@ -6,9 +6,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 
-import { NewsListScreen } from "./screens/home/NewsListScreen";
 import { UserRpofilScreen } from "./screens/home/UserRpofilScreen";
-import { UserPostScreen } from "./screens/home/UserPostScreen";
+import { NewsListScree } from "./screens/home/NewsListScreen";
+import { CreatePostScreen } from "./screens/home/CreatePostScreen";
 import { UserLogin } from "./screens/registerPage/UserLogin";
 import { UserRegistration } from "./screens/registerPage/UserRegistration";
 import { store } from "./redux/store";
@@ -46,8 +46,8 @@ let content = (
           />
         ),
       }}
-      name="NewsList"
-      component={NewsListScreen}
+      name="NewsListScree"
+      component={NewsListScree}
     />
 
     <Tab.Screen
@@ -60,8 +60,8 @@ let content = (
           />
         ),
       }}
-      name="UserPost"
-      component={UserPostScreen}
+      name="CreatePost"
+      component={CreatePostScreen}
     />
   </Tab.Navigator>
 );

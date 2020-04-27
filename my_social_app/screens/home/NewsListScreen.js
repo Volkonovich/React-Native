@@ -1,19 +1,23 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { MapScreen } from "../mainScreen/MapScreen";
+import { PostsScreen } from "../mainScreen/PostsScreen";
 
-export const NewsListScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>NewsListScreen</Text>
-    </View>
-  );
-};
+const RootMain = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export const NewsListScree = () => (
+  <RootMain.Navigator>
+    <RootMain.Screen
+      options={{
+        headerShown: false,
+      }}
+      name="Posts"
+      component={PostsScreen}
+    />
+    <RootMain.Screen
+      options={{ headerShown: false }}
+      name="Map"
+      component={MapScreen}
+    />
+  </RootMain.Navigator>
+);

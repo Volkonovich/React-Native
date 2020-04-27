@@ -6,6 +6,9 @@ import {
   Button,
   Alert,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { auth } from "../../firebase/config";
@@ -58,7 +61,7 @@ export const UserRegistration = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Text style={styles.title}>Registered new User</Text>
@@ -107,9 +110,8 @@ export const UserRegistration = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     borderWidth: 2,
@@ -117,23 +119,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#84a9ac",
     height: 40,
-    width: "70%",
+    width: 300,
     marginHorizontal: 20,
     color: "#204051",
     fontSize: 15,
     paddingLeft: 25,
   },
   title: {
-    width: "100%",
     color: "#3b6978",
     fontSize: 30,
     fontWeight: "400",
-    textAlign: "center",
   },
   button: {
     borderWidth: 2,
     borderRadius: 10,
-    width: "15%",
+    width: 60,
     borderColor: "#3b6978",
     height: 35,
     marginHorizontal: 20,

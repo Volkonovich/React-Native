@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+
 import { TextInput } from "react-native-gesture-handler";
 import { auth } from "../../firebase/config";
 
@@ -34,12 +35,9 @@ export const UserLogin = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.Os == "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
+        <View style={styles.wrapper}>
           <Text style={styles.title}>Login</Text>
           <TextInput
             style={styles.input}
@@ -77,6 +75,13 @@ export const UserLogin = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     borderWidth: 2,
@@ -84,23 +89,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#84a9ac",
     height: 40,
-    width: "70%",
+    width: 300,
     marginHorizontal: 20,
     color: "#204051",
     fontSize: 15,
     paddingLeft: 25,
   },
   title: {
-    width: "100%",
     color: "#3b6978",
     fontSize: 30,
     fontWeight: "400",
-    textAlign: "center",
   },
   button: {
     borderWidth: 2,
     borderRadius: 10,
-    width: "15%",
+    width: 60,
     borderColor: "#3b6978",
     height: 35,
     marginHorizontal: 20,

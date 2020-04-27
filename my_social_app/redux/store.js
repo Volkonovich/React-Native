@@ -18,6 +18,8 @@ const reducer = {
       userName: payload.userName,
       userId: payload.userId,
       userPosts: payload.userPosts,
+      // likes: payload.likes,
+      // // isOfLikes: payload.isOfLikes,
     };
   },
   USER_EXIT: () => initialState,

@@ -1,75 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button, FlatList, Image } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import { ListDrawing } from "../../component/ListDrawing";
+import { useSelector } from "react-redux";
 import { auth, firestore } from "../../firebase/config";
-import { NewsListScreen } from "./NewsListScreen";
 
-export const UserRpofilScreen = () => {
-  const dispatch = useDispatch();
-  const { userId, userPosts } = useSelector((state) => state.user);
-  const [allPosts, setAllPosts] = useState([]);
+export const UserRpofilScreen = ({ navigation }) => {
+  const [curetUserPost, setcuretUserPost] = useState([]);
 
-  useEffect(() => {
-    currentUser();
-  }, []);
+  const { userId } = useSelector((state) => state.user);
 
   useEffect(() => {
-    getCollection();
-  }, []);
+    getCurrentUserPost();
+  }, [userId]);
 
-  const currentUser = async () => {
-    const currentUser = await auth.currentUser;
-    // setname(currentUser.displayName);
-    dispatch({
-      type: "USER_CURRENT",
-      payload: {
-        userName: currentUser.displayName,
-        userId: currentUser.uid,
-      },
-    });
+  const getCurrentUserPost = async () => {
+    await firestore
+      .collection("posts")
+      .where("userId", "==", userId)
+      .onSnapshot((data) =>
+        setcuretUserPost(data.docs.map((doc) => doc.data()))
+      );
   };
-
   const logOut = async () => {
     await auth.signOut();
     dispatch({ type: "USER_EXIT" });
   };
-  const getCollection = async () => {
-    await firestore
-      .collection("posts")
-      .where("userId", "==", userId)
-      .onSnapshot((data) => setAllPosts(data.docs.map((doc) => doc.data())));
-  };
-  console.log("allPosts", allPosts);
 
   return (
     <View style={styles.container}>
-      <Button
-        style={styles.btn}
-        title="LogOut"
-        onPress={logOut}
-        color={"#204051"}
-        backgroundColor={"#0779e4"}
-      />
-      <Text>Hello welcome back!!! </Text>
-
-      <FlatList
-        data={allPosts}
-        keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => {
-          console.log("post", item);
-          return (
-            <Image
-              style={{
-                marginTop: 30,
-                width: 150,
-                height: 100,
-                marginBottom: 30,
-              }}
-              source={{ uri: item.image }}
-            />
-          );
+      <Text>Profile</Text>
+      <TouchableOpacity
+        style={{
+          marginTop: 100,
+          borderColor: "red",
+          borderWidth: 1,
+          padding: 10,
+          borderRadius: 10,
         }}
-      />
+        onPress={logOut}
+      >
+        <Text>SignOut</Text>
+      </TouchableOpacity>
+      <View style={{ marginTop: 200 }}>
+        <ListDrawing nav={navigation} data={curetUserPost} />
+      </View>
     </View>
   );
 };
@@ -79,11 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    paddingTop: 70,
     justifyContent: "center",
-  },
-  btnOut: {},
-  btn: {
-    borderColor: "red",
   },
 });
